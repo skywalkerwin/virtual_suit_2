@@ -88,9 +88,13 @@ void Legs::legsUpdate() {
 					if (j < 6) {
 						if (i == 0) {
 							lhist[0][j][hcount] = magno[i][j];
+							leftCur[0][j] = magno[i][j];
+							legCur[0][0][j] = magno[i][j];
 						}
 						if (i == 1) {
 							rhist[0][j][hcount] = magno[i][j];
+							rightCur[0][j] = magno[i][j];
+							legCur[1][0][j] = magno[i][j];
 						}
 					}
 				}
@@ -116,21 +120,28 @@ void Legs::legsUpdate() {
 					if (i == 0 || i == 1) {
 						//first left 2
 						lhist[i + 1][j][hcount] = imu[i][j];
+						leftCur[i + 1][j] = imu[i][j];
+						legCur[0][i + 1][j] = magno[i][j];
 					}
 					if (i == 2 || i == 3) {
 						//first right 2
 						rhist[i - 1][j][hcount] = imu[i][j];
+						rightCur[i - 1][j] = imu[i][j];
+						legCur[1][i - 1][j] = magno[i][j];
 					}
 					if (i == 4 || i == 5) {
 						//second left 2
 						lhist[i - 1][j][hcount] = imu[i][j];
+						leftCur[i - 1][j] = imu[i][j];
+						legCur[0][i - 1][j] = magno[i][j];
 					}
 					if (i == 6 || i == 7) {
 						//second right 2
 						rhist[i - 3][j][hcount] = imu[i][j];
+						rightCur[i - 3][j] = imu[i][j];
+						legCur[1][i - 3][j] = magno[i][j];
 					}
 				}
-
 			}
 			ttime = ((inBuffer[132] << 8) | (inBuffer[133] & 0xff));
 			calcAvgs();
@@ -178,18 +189,7 @@ void Legs::legsUpdate() {
 }
 
 
-
-
-
-
-
 // ######################################################################################################################################################################################
-
-// --------------------------------------------------------------------------------------CAREFUL USING ABSOLUTE VALUES HERE (BELOW in calc Averages functions)-----------------------------------------------------------------------------
-
-//		                                                      Using absolute values might reduce the variety of possible moves in half. Probably change later once moves better defined
-
-//						UPDATE REMOVED ABSOLUTE VALUES
 
 void Legs::calcAvgs() {
 	//average values of each axis on sensor over a window of size histlength
@@ -270,43 +270,34 @@ void Legs::calcXYZavgs() {
 	}
 }
 
-void Legs::rockCheck1() {
+int Legs::rockCheck1() {
 	// right now i am using this check command to simply check for the first launching of the rock, but Ill eventually need to check
 	// for other types of actions as well, not just from the legs, but from the whole body as well and im not sure how to do this yet.
 
-	if (lxyzavg[3] < -400) {
-		ofLog() << "LEFT Leg Twist: " << lxyzavg[3] << endl;
-		ofSetColor(255, 0, 0);
-		ofDrawBox(vec3(ofGetWidth() / 2, ofGetHeight() / 2, 0), -lxyzavg[3]);
-		if (rockUp == 0) {
-			rock.setupRock(abs(lxyzavg[3]));
-			rockUp = 1;
-		}
+	//this function returns a 0 (LEFT) or a 1 (RIGHT), telling the body which leg to grab the sensor data from
+	if (abs(lxyzavg[3]) > 100) {
+		return 0;
 	}
-	if (rxyzavg[3] > 400) {
-		ofLog() << "RIGHT Leg Twist: " << rxyzavg[3] << endl;
-		ofSetColor(0, 255, 0);
-		ofDrawBox(vec3(ofGetWidth() / 2, ofGetHeight() / 2, 0), rxyzavg[3]);
-		if (rockUp == 0) {
-			rock.setupRock(abs(rxyzavg[3]));
-			rockUp = 1;
-		}
+	if (abs(rxyzavg[3]) > 100) {
+		return 1;
 	}
+	return 1;
 }
-//float *Legs::getAvgs() {
-//	//average values of each axis on sensor over a window of size histlength
-//	return (float*)avgs;
-//}
-//
-//float *Legs::getSavgs() {
-//	//average values of all accel and gyro measurements for each sensor (x+y+z)/3
-//	return (float*)savgs;
-//}
-//
-//float *Legs::getXYZavgs() {
-//	//average values of all (accel and gyro) average measurements for all sensors on each leg 
-//	return *xyzavgs;
-//}
+
+int Legs::rockCheck2() {
+	//this function returns a 0 (LEFT) or a 1 (RIGHT), telling the body which leg to grab the sensor data from
+	//this function is checking for the second sequence of actions - to propel the rock using the sensor on the foot
+	
+	//INFUSE MORE SENSORS PLEASE
+
+	if (lavg[0][2] > 4) {
+		return 0;
+	}
+	if (ravg[0][2] > 4) {
+		return 1;
+	}
+	return -1;
+}
 
 void Legs::plotimu(float x, float y, int c, int h) {
 	float xoff = (ofGetWidth() / 2) / histlength;
@@ -659,9 +650,10 @@ void Legs::plotimu3(float x, float y, bool exclu[5]) {
 
 void Legs::plotAvg(float savg[5][2], float avg[5][6], float xyzavg[6], int index) {
 	float yscale = 0;
-	if (index == 0) yscale = 50; 
+	if (index == 0) yscale = 30; 
 	if (index == 1) yscale = .5;
-	ofFill();
+	//ofFill();
+	ofNoFill();
 	ofPushMatrix();
 	float allAvg = 0;
 	for (int i = 0; i < 5; i++) {
@@ -669,40 +661,48 @@ void Legs::plotAvg(float savg[5][2], float avg[5][6], float xyzavg[6], int index
 		else ofSetColor(0, 255, 0, 150);
 		allAvg += savg[i][index];
 		ofRectangle rect;
-		rect.x = i * 150;
+		rect.x = i * 90;
 		rect.y = 0;
-		rect.width = 150;
+		rect.width = 90;
 		rect.height = -savg[i][index] * yscale;
 		ofDrawRectangle(rect);
+		ofSetLineWidth(i+1);
+		ofSetColor(255);
+		ofDrawLine(rect.x, -50, rect.x, 50);
+		ofSetLineWidth(5);
 		for (int j = index*3; j < (index*3)+3; j++) {
 			if (j == 0 || j == 3) ofSetColor(255, 0, 0);
 			if (j == 1 || j == 4) ofSetColor(0, 255, 0);
-			if (j == 2 || j == 5) ofSetColor(0, 0, 255);
+			if (j == 2 || j == 5) ofSetColor(30, 30, 255);
 			int m = j;
 			if (index == 1) {
 				m = j - 3;
 			}
-			rect.x = i * 150 + (m * 50);
-			rect.width = 50;
+			rect.x = i * 90 + (m * 30);
+			rect.width = 30;
 			rect.height = -avg[i][j] * yscale;
 			ofDrawRectangle(rect);
 		}
 		if (index == 0) ofSetColor(255, 0, 0, 150);
 		else ofSetColor(0, 255, 0, 150);
-		rect.x = 750;
-		rect.width = 150;
+		rect.x = 450;
+		rect.width = 120;
 		rect.height = -(allAvg / 5) * yscale;
 		ofDrawRectangle(rect);
+		ofSetLineWidth(6);
+		ofSetColor(255);
+		ofDrawLine(rect.x, -50, rect.x, 50);
+		ofSetLineWidth(5);
 		for (int j = index * 3; j < (index * 3) + 3; j++) {
 			if (j == 0 || j == 3) ofSetColor(255, 0, 0);
 			if (j == 1 || j == 4) ofSetColor(0, 255, 0);
-			if (j == 2 || j == 5) ofSetColor(0, 0, 255);
+			if (j == 2 || j == 5) ofSetColor(30, 30, 255);
 			int m = j;
 			if (index == 1) {
 				m = j-3;
 			}
-			rect.x = 750 + (m * 50);
-			rect.width = 50;
+			rect.x = 450 + (m * 40);
+			rect.width = 40;
 			rect.height = -xyzavg[j] * yscale;
 			ofDrawRectangle(rect);
 		}
@@ -711,7 +711,9 @@ void Legs::plotAvg(float savg[5][2], float avg[5][6], float xyzavg[6], int index
 }
 
 void Legs::plotAvgs() {
-	ofFill();
+	//ofFill();
+	ofSetLineWidth(5);
+	ofNoFill();
 	//left ACCEL
 	ofPushMatrix();
 	ofTranslate(0, ofGetHeight() / 4);
@@ -720,7 +722,7 @@ void Legs::plotAvgs() {
 
 	//right ACCEL
 	ofPushMatrix();
-	ofTranslate(ofGetWidth()/2, ofGetHeight()/4);
+	ofTranslate(3*ofGetWidth()/4 + 50, ofGetHeight()/4);
 	plotAvg(rSavg, ravg, rxyzavg, 0);
 	ofPopMatrix();
 
@@ -732,9 +734,10 @@ void Legs::plotAvgs() {
 
 	//right GYRO
 	ofPushMatrix();
-	ofTranslate(ofGetWidth()/2, ofGetHeight()*3/4);
+	ofTranslate(3 * ofGetWidth() / 4 + 50, ofGetHeight()*3/4);
 	plotAvg(rSavg, ravg, rxyzavg, 1);
 	ofPopMatrix();
+	ofSetLineWidth(1);
 }
 
 Legs::Legs()

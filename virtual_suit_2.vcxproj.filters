@@ -322,26 +322,47 @@
     <ClCompile Include="..\..\..\addons\ofxSerial\libs\serial\src\serial.cc">
       <Filter>addons\ofxSerial\libs\serial\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Arm.cpp">
+    <ClCompile Include="src\Oracle.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Healthbar.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Air.cpp">
+      <Filter>src\Elements\Air</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Earth.cpp">
+      <Filter>src\Elements\Earth</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fire.cpp">
+      <Filter>src\Elements\Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Water.cpp">
+      <Filter>src\Elements\Water</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Rock.cpp">
+      <Filter>src\Elements\Earth</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Fireball.cpp">
+      <Filter>src\Elements\Fire</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Arm.cpp">
+      <Filter>src\Body</Filter>
+    </ClCompile>
     <ClCompile Include="src\Body.cpp">
+      <Filter>src\Body</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Dummy.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Legs.cpp">
-      <Filter>src</Filter>
+      <Filter>src\Body</Filter>
     </ClCompile>
     <ClCompile Include="src\LightCycle.cpp">
-      <Filter>src</Filter>
+      <Filter>src\Extra</Filter>
     </ClCompile>
     <ClCompile Include="src\Sword.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rock.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Oracle.cpp">
-      <Filter>src</Filter>
+      <Filter>src\Extra</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -515,6 +536,27 @@
     </Filter>
     <Filter Include="addons\ofxSerial\libs\serial\src\impl\list_ports">
       <UniqueIdentifier>{3D4459A0-9F72-3D92-F223-1A0E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Elements">
+      <UniqueIdentifier>{3d9ddf2c-4f9e-4813-8c40-6d16849f01e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Elements\Air">
+      <UniqueIdentifier>{09c82f0d-cf8a-4c31-85ca-2265af2912db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Elements\Earth">
+      <UniqueIdentifier>{93604459-7d0c-4b9b-8289-a0f183320cc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Elements\Water">
+      <UniqueIdentifier>{7602d89b-0fe6-4867-bab2-ac18bdf5a684}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Elements\Fire">
+      <UniqueIdentifier>{d417d008-1789-4bbc-9db2-dc0e61f55565}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Body">
+      <UniqueIdentifier>{bfec8aca-7487-4ac3-8b93-322e2d6628b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Extra">
+      <UniqueIdentifier>{c941eaf3-281b-456d-bbc7-1bc2e078a30c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1013,26 +1055,47 @@
     <ClInclude Include="..\..\..\addons\ofxSerial\libs\serial\include\serial\v8stdint.h">
       <Filter>addons\ofxSerial\libs\serial\include\serial</Filter>
     </ClInclude>
-    <ClInclude Include="src\Arm.h">
+    <ClInclude Include="src\Oracle.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Healthbar.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Air.h">
+      <Filter>src\Elements\Air</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Earth.h">
+      <Filter>src\Elements\Earth</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fire.h">
+      <Filter>src\Elements\Fire</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Water.h">
+      <Filter>src\Elements\Water</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Rock.h">
+      <Filter>src\Elements\Earth</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Fireball.h">
+      <Filter>src\Elements\Fire</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Arm.h">
+      <Filter>src\Body</Filter>
+    </ClInclude>
     <ClInclude Include="src\Body.h">
+      <Filter>src\Body</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Dummy.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Legs.h">
-      <Filter>src</Filter>
+      <Filter>src\Body</Filter>
     </ClInclude>
     <ClInclude Include="src\LightCycle.h">
-      <Filter>src</Filter>
+      <Filter>src\Extra</Filter>
     </ClInclude>
     <ClInclude Include="src\Sword.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Rock.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Oracle.h">
-      <Filter>src</Filter>
+      <Filter>src\Extra</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -184,8 +184,14 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Air.cpp" />
     <ClCompile Include="src\Arm.cpp" />
     <ClCompile Include="src\Body.cpp" />
+    <ClCompile Include="src\Dummy.cpp" />
+    <ClCompile Include="src\Earth.cpp" />
+    <ClCompile Include="src\Fire.cpp" />
+    <ClCompile Include="src\Fireball.cpp" />
+    <ClCompile Include="src\Healthbar.cpp" />
     <ClCompile Include="src\Legs.cpp" />
     <ClCompile Include="src\LightCycle.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -297,11 +303,19 @@
     <ClCompile Include="..\..\..\addons\ofxSerial\libs\serial\src\serial.cc" />
     <ClCompile Include="src\Oracle.cpp" />
     <ClCompile Include="src\Rock.cpp" />
+    <ClCompile Include="src\RockWall.cpp" />
     <ClCompile Include="src\Sword.cpp" />
+    <ClCompile Include="src\Water.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Air.h" />
     <ClInclude Include="src\Arm.h" />
     <ClInclude Include="src\Body.h" />
+    <ClInclude Include="src\Dummy.h" />
+    <ClInclude Include="src\Earth.h" />
+    <ClInclude Include="src\Fire.h" />
+    <ClInclude Include="src\Fireball.h" />
+    <ClInclude Include="src\Healthbar.h" />
     <ClInclude Include="src\Legs.h" />
     <ClInclude Include="src\LightCycle.h" />
     <ClInclude Include="src\ofApp.h" />
@@ -471,7 +485,9 @@
     <ClInclude Include="..\..\..\addons\ofxSerial\libs\serial\include\serial\v8stdint.h" />
     <ClInclude Include="src\Oracle.h" />
     <ClInclude Include="src\Rock.h" />
+    <ClInclude Include="src\RockWall.h" />
     <ClInclude Include="src\Sword.h" />
+    <ClInclude Include="src\Water.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

@@ -23,18 +23,15 @@ public:
 	void stop();
 	void threadedFunction();
 
-	void rockCheck1();
-
-	//float *getAvgs();
-	//float *getSavgs();
-	//float *getXYZavgs();
+	int rockCheck1();
+	int rockCheck2();
 
 	Legs();
 	~Legs();
 
 	//ofFile legData;
-	Rock rock;
-	bool rockUp = 0;
+	//Rock rock;
+	//bool rockUp = 0;
 	ofSerial port;
 	string coms;
 	bool firstContact = false;
@@ -46,25 +43,37 @@ public:
 	// sensor history
 	int hcount = 0;
 	static const int nframes = 30;
-	static const int histlength = 20;
+	static const int histlength = 30;
 	float mhist[2][9][histlength];
 	float ihist[8][6][histlength];
 	float lhist[5][6][histlength];
 	float rhist[5][6][histlength];
 	float nimu[12][6][nframes];
 	float nmag[3][9][nframes];
+
+	//current values for each leg
+	float leftCur[5][6];
+	float rightCur[5][6];
+	float legCur[2][5][6];
+
 	//histlength/nframes window averages
+	//--------------------------------------------------------
+	//the average x/y/z values of each sensor over some window accel=012 gyro=345
 	float lavg[5][6];
 	float ravg[5][6];
 	float avgs[2][5][6];
 
+	//the average values of both ACCEL/GYRO for each sensor over some window accel=0 gyro=1
 	float lSavg[5][2];
 	float rSavg[5][2];
 	float savgs[2][5][2];
 
+	//the average values of all individual axis readings on each sensor -- calculates using lavg/ravg/avgs
+	//so the average x-accel from all sensors, or the average y-gyro from all sensors
 	float lxyzavg[6];
 	float rxyzavg[6];
 	float xyzavgs[2][6];
+	//--------------------------------------------------------
 
 	float magadj[3] = { 176, 176, 165 };
 	float ypltscales[3] = { 16, 2000, 1000 };
@@ -75,6 +84,13 @@ public:
 	float magscale[3][3] = { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
 	float scalebias[3][3] = { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } };
 	float avgrad[3] = { 1, 1, 1 };
+	// sensor fusion stuff...quaternions
+	float deltat = 0;
+	static constexpr float GyroMeasError = PI * (50.0 / 180.0); // gyroscope measurement error in rads/s (start at 40 deg/s)
+	static constexpr float GyroMeasDrift = PI * (10.0 / 180.0); // gyroscope measurement drift in rad/s/s (start at 0.0 deg/s/s)
+	const float beta = sqrt(3.0 / 4.0) * GyroMeasError; // compute beta
+	const float zeta = sqrt(3.0 / 4.0) * GyroMeasDrift;
+	float q[8][4];//quaternions
 	//scalar multipliers for sensors
 	const float ascale = .000488;
 	const float gscale = .061068;

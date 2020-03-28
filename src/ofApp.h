@@ -5,13 +5,16 @@
 #include "ofxXmlPoco.h"
 #include "ofxIO.h"
 #include "ofxSerial.h"
+
 #include "Body.h"
 #include "Arm.h"
+#include "Legs.h"
+
 #include "Sword.h"
 #include "LightCycle.h"
-#include "Rock.h"
-#include "Legs.h"
 #include "Oracle.h"
+
+#include "Dummy.h"
 
 
 class ofApp : public ofBaseApp {
@@ -35,6 +38,8 @@ public:
 	void gotMessage(ofMessage msg);
 	void exit();
 
+	void frameClock();
+
 	Oracle oracle;
 	Body mybody;
 	Sword saber;
@@ -45,7 +50,7 @@ public:
 	int y = 0;
 	int x = 0; 
 
-
+	bool showPlots = 1;
 	int cycleFrames = 60;
 	int framecount = 0;
 	vec3 stepClockPos;
@@ -79,5 +84,11 @@ public:
 	float sphereHeight = ofGetHeight();
 	int sphereDir = -1;
 	bool showCam = 1;
+	float camX = 0;
+	float camY = 0;
+	float camZ = 0;
 
+	//Dummy stuff
+	static const int dummyCount = 8;
+	Dummy dummy[dummyCount];
 };

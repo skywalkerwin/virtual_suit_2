@@ -2,6 +2,13 @@
 #include "ofMain.h"
 #include "Arm.h"
 #include "Legs.h"
+//#include "Fireball.h"
+
+#include "Air.h"
+#include "Fire.h"
+#include "Earth.h"
+#include "Water.h"
+
 using namespace std;
 
 
@@ -19,7 +26,7 @@ public:
 	void drawHandPlots();
 	void testimus();
 
-	void checkMoves();
+	void checkMoves(vec3 v);
 
 
 	~Body();
@@ -31,8 +38,11 @@ public:
 	Arm larm , rarm;
 	Legs legs;
 
-	//Rock rock;
-	//bool rockUp = 0;
+	//Fireball fireballs;
+
+	//Elements
+	Earth earth;
+	Fire fire;
 
 	ofBoxPrimitive torso;
 	//LightCycle* lcycle;
