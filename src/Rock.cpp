@@ -18,7 +18,7 @@ void Rock::setupRock(vec3 v, float sz, int ind) {
 	rockSphere.setGlobalPosition(v);
 	if (ind == 0) xDir = 1;
 	else xDir = -1;
-	rockX = rockSphere.getX() - xDir * 300 ;
+	rockX = rockSphere.getX() - xDir * 500 ;
 	//rockY = rockSphere.getY() + 700;
 	rockY = 3 * ofGetHeight() / 4;
 	rockZ = rockSphere.getZ() - 300;
@@ -33,9 +33,9 @@ void Rock::updateRock(int ind, float xv, float yv, float zv) {
 	xPull *= xDir;
 	rockState = 3;
 	xCenter = rockX;
-	rockDX = xv*30*xDir;
+	rockDX = xv*20*xDir;
 	rockDY = yv*50;
-	rockDZ = - zv*40;
+	rockDZ = - zv*60;
 }
 
 int Rock::drawRock() {
@@ -63,7 +63,7 @@ int Rock::drawRock() {
 			//rockTrail[currentTrail].draw();
 			if (rockY <= ofGetHeight() + rockSize / 2) {
 				airTime += 1;
-				rockX = ofGetWidth()/2-xDir * 300 - (rockDX * airTime) + (.5 * xPull*airTime*airTime);
+				rockX = ofGetWidth()/2-xDir * 500 - (rockDX * airTime) + (.5 * xPull*airTime*airTime);
 				//rockY = ofGetHeight()/2 + 700 - (rockDY * airTime) + (.5 * GRAV*airTime*airTime);
 				rockY = 3*ofGetHeight()/4 - (rockDY * airTime) + (.5 * GRAV*airTime*airTime);
 				rockZ = -200 + rockDZ * airTime;

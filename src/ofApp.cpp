@@ -74,7 +74,7 @@ void ofApp::draw() {
 	cam.setGlobalPosition(mybody.torso.getGlobalPosition()+vec3(0,-600,700));
 	cam.begin();
 	ofScale(1, -1, 1);
-	ofBackground(0);
+	ofBackground(100);
 	ofDrawBitmapString(ofGetWidth() / 2 + camX, 20, 20);
 	ofDrawBitmapString(-500 + camY, 20, 40);
 	ofDrawBitmapString(800 + camZ, 20, 60);
@@ -92,7 +92,7 @@ void ofApp::draw() {
 	ofRotateZDeg(-90);
 	ofSetLineWidth(5);
 	ofSetColor(24, 202, 230);
-	ofDrawGridPlane(100, 250);
+	//ofDrawGridPlane(100, 250);
 	//ofSetColor(254, 1, 154);
 	//ofTranslate(1, 0, 1);
 	//ofDrawGridPlane(100, 200);
@@ -133,7 +133,7 @@ void ofApp::draw() {
 	if (showPlots) {
 		ofPushMatrix();
 		//mybody.drawHandPlots();
-		//mybody.legs.plotimu3(ofGetWidth(), ofGetHeight(), exclu);
+		mybody.legs.plotimu3(ofGetWidth(), ofGetHeight(), exclu);
 		mybody.legs.plotAvgs();
 		ofPopMatrix();
 	}

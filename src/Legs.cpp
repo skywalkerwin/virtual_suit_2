@@ -290,10 +290,10 @@ int Legs::rockCheck2() {
 	
 	//INFUSE MORE SENSORS PLEASE
 
-	if (lavg[0][2] > 4) {
+	if (lavg[0][2] > 3) {
 		return 0;
 	}
-	if (ravg[0][2] > 4) {
+	if (ravg[0][2] > 3) {
 		return 1;
 	}
 	return -1;
@@ -518,6 +518,7 @@ void Legs::plotimu2(float x, float y) {
 }
 
 void Legs::plotimu3(float x, float y, bool exclu[5]) {
+	ofPushMatrix();
 	float xoff = (x / 2) / histlength;
 	float yoff = y / 4 / 16;
 	ofNoFill();
@@ -646,12 +647,13 @@ void Legs::plotimu3(float x, float y, bool exclu[5]) {
 		}
 	}
 	ofPopMatrix();
+	ofPopMatrix();
 }
 
-void Legs::plotAvg(float savg[5][2], float avg[5][6], float xyzavg[6], int index) {
+void Legs::plotAvg(float savg[5][2], float avg[5][6], float xyzavg[6], float cur[5][6], int index) {
 	float yscale = 0;
-	if (index == 0) yscale = 30; 
-	if (index == 1) yscale = .5;
+	if (index == 0) yscale = 20; 
+	if (index == 1) yscale = .25;
 	//ofFill();
 	ofNoFill();
 	ofPushMatrix();
@@ -682,6 +684,12 @@ void Legs::plotAvg(float savg[5][2], float avg[5][6], float xyzavg[6], int index
 			rect.width = 30;
 			rect.height = -avg[i][j] * yscale;
 			ofDrawRectangle(rect);
+			ofFill();
+			rect.x = i * 90 + (m * 30) + 10;
+			rect.width = 8;
+			rect.height = -cur[i][j] * yscale;
+			ofDrawRectangle(rect);
+			ofNoFill();
 		}
 		if (index == 0) ofSetColor(255, 0, 0, 150);
 		else ofSetColor(0, 255, 0, 150);
@@ -717,25 +725,25 @@ void Legs::plotAvgs() {
 	//left ACCEL
 	ofPushMatrix();
 	ofTranslate(0, ofGetHeight() / 4);
-	plotAvg(lSavg, lavg, lxyzavg, 0);
+	plotAvg(lSavg, lavg, lxyzavg, leftCur, 0);
 	ofPopMatrix();
 
 	//right ACCEL
 	ofPushMatrix();
 	ofTranslate(3*ofGetWidth()/4 + 50, ofGetHeight()/4);
-	plotAvg(rSavg, ravg, rxyzavg, 0);
+	plotAvg(rSavg, ravg, rxyzavg, rightCur, 0);
 	ofPopMatrix();
 
 	//left GYRO
 	ofPushMatrix();
 	ofTranslate(0, ofGetHeight()*3/4);
-	plotAvg(lSavg, lavg, lxyzavg, 1);
+	plotAvg(lSavg, lavg, lxyzavg, leftCur, 1);
 	ofPopMatrix();
 
 	//right GYRO
 	ofPushMatrix();
 	ofTranslate(3 * ofGetWidth() / 4 + 50, ofGetHeight()*3/4);
-	plotAvg(rSavg, ravg, rxyzavg, 1);
+	plotAvg(rSavg, ravg, rxyzavg, rightCur, 1);
 	ofPopMatrix();
 	ofSetLineWidth(1);
 }

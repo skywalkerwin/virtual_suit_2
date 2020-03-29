@@ -18,7 +18,7 @@ public:
 	void plotimu2(float x, float y);
 	void plotimu3(float x, float y, bool exclu[5]);
 	void plotAvgs();
-	void plotAvg(float savg[5][2], float avg[5][6], float xyzavg[6], int index);
+	void plotAvg(float savg[5][2], float avg[5][6], float xyzavg[6], float cur[5][6], int index);
 	void start();
 	void stop();
 	void threadedFunction();

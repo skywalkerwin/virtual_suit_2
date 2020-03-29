@@ -4,8 +4,8 @@
 void Body::bodySetup() {
 	torso.set(200);
 	legs.legsSetup(legComs);
-	//larm.armSetup(leftcom, torso, -1);
-	//rarm.armSetup(rightcom, torso, 1);
+	larm.armSetup(leftcom, torso, -1);
+	rarm.armSetup(rightcom, torso, 1);
 	torso.setGlobalPosition(vec3(ofGetWidth() / 2, ofGetHeight() / 2, 0));
 	//*lcycle = c;
 	//torso.setParent(lcycle->core);
